@@ -1,0 +1,37 @@
+{
+  "name": "github-and-git-guide",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Out of the box Gatsby Starter for creating documentation websites easily and quickly. With support for MDX, code highlight, Analytics, SEO and more",
+  "author": "El Felah Mohamed Taieb <melfelah@dxc.com> (@melfelah)",
+  "license": "MIT",
+  "starter-name": "github-and-git-guide",
+  "dependencies": {
+    "@rocketseat/gatsby-theme-docs": "^2.1.1",
+    "emotion": "^10.0.27",
+    "gatsby": "^2.22.21",
+    "gatsby-plugin-canonical-urls": "^2.1.19",
+    "gatsby-plugin-google-analytics": "^2.1.34",
+    "gatsby-plugin-manifest": "^2.2.37",
+    "gatsby-plugin-offline": "^3.0.32",
+    "gatsby-plugin-sitemap": "^2.2.26",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "devDependencies": {
+    "gh-pages": "^3.0.0"
+  },
+  "keywords": [
+    "gatsby",
+    "rocketseat",
+    "gatsby-starter"
+  ],
+  "scripts": {
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
+    "build": "gatsby build",
+    "start": "gatsby develop",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  }
+}

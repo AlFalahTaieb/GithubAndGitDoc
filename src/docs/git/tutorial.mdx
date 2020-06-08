@@ -1,0 +1,126 @@
+---
+title: Tutorial
+description: 'Tutorial Page to Get started with Git'
+image: data/git.svg
+---
+
+
+
+## Initial Setup
+
+We will start with an extremely simple. we create a folder called `gitProject` on your desktop and put one file in it called `test.txt`. It will look like this:
+
+```text
+AAAA
+BBBB
+CCCC
+```
+
+Then to init the folder you need to enter this command in the terminal (this is Linux, so adjust for Windows if needed):
+
+```shell
+cd ~/Desktop/gitProject
+git init
+```
+
+This marks the folder as a git "Repository." A Repository (or "repo") is just a folder that is tracked by Git and responds to Git commands. You'll know it's a repo because there will now be a .git sub-folder in there alongside your `test.txt` file.
+
+## Adding to Staging
+Enter this command in the terminal:
+
+```shell
+git add ./test.txt
+```
+This adds your file to staging. 
+
+**Staging** is just a preparation area where you prepare all your files before you make an official `commit`. 
+
+Think of a commit as permanently recording in your repo's history what changes you have made to your files. 
+
+When you commit, whatever changes were staged will now be recorded in the history of your repository forever (there are ways to remove commits but its difficult and generally discouraged).
+
+## Making a Commit
+Enter this command in the terminal:
+
+```shell
+git commit -m "Created a file and this is my first commit!"
+```
+
+This command will commit the file with a message explaining the commit itself.
+
+At this point you now have a local repository.
+Keeping things local makes life a lot easier when learning the basics. That means you don't have to worry about `git push`, `git fetch`, or `git pull`.
+
+## File Modification & A Second Commit
+Next,let's make a change to our `test.txt`:
+
+```text
+DDDD
+BBBB
+CCCC
+```
+
+And then we commit those changes:
+
+```shell
+ git status
+ ```
+
+ This shows us the current status of our repo. 
+ We can see very clearly that something has changed.
+
+```shell
+git add ./test.txt
+git status
+```
+
+Ok, so now we can see that we have a file added to the staging area, but it's not committed yet. Let's change that!
+
+```shell
+git commit -m "Changed first line of the file"
+git status
+```
+
+Now we can see that there are no changes left! 
+
+Nothing to commit! Cool! 🎉
+
+
+## Git remote Command
+The `git remote` command lets you create, view, and delete connections to other repositories. Remote connections are more like bookmarks rather than direct links into other repositories. 
+
+Let's try this command inside our folder  `gitProject`:
+
+```shell
+git remote add origin git@github.com:myGithubName/myRepoName
+```
+
+What we are saying in our language to git is : 
+
+
+```text
+👋 Hello Git on my local machine, Whenever I use the word origin, I am really talking about this repository on my Github account. Don't forget that! Thanks!👌
+```
+        
+## Git Push Command
+
+The `git push` command is used to upload local repository content to a remote repository. Pushing is how you transfer commits from your local repository to a remote repo.
+
+Let's try this command inside our folder  `gitProject`:
+
+```shell
+git push origin master
+```
+
+What you are actually doing is saying :
+
+```text
+👋  Hey Git! I want to save all of the commits of my current working branch to the master branch of 'origin'. You do remember what `origin` was, don't you?
+```
+*This is different from git push origin which will save all of the commits on ALL of your local branches to the matching branches on origin.*
+
+Git response:
+
+```text
+Oh yes! I remember of course! You told me that 'origin' was such-and-such repository on your Github account! I will save your work (and your work history) there!
+ ```
