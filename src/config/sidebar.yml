@@ -18,7 +18,9 @@
     - label: 'What is Git ?'
       link: '/git/what-is-git'
     - label: 'Getting Started with Git'
-      link: '/git/tutorial'
+      link: '/git/tutorial'    
+    - label: 'Git WorkFlow'
+      link: '/git/git-workflow'
       
 - label: Others
   items:
