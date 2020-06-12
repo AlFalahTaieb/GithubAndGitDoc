@@ -1,0 +1,143 @@
+---
+title: How to work with branches ?
+---
+
+## Basic branching
+When working in a decentralized workflow, the concepts is simple. `master` represents the official history and should always deployable. 
+With each new scope of work, aka feature, a developer creates a new branch. For simplicity, make sure to use descriptive names like `fix-bug-message` or `app-oauth`for our branches.
+
+
+Although we may have a feature like `User Authentication and Registration`, it may not be appropriate to create a feature branch, there is too much work to be done. It may better to break these large deliverables down to smaller bits of work that can be continuously integrated into the project. Remember, commit early and often.
+
+Before we create a branch, always be sure we have all the upstream changes from the `origin/master` branch.
+
+## Make sure we are on master
+
+Before we pull, we have to make sure that we are on the right branch.
+The following command is good to know the list of branches that we have locally as well as designate which branch we are currently on. 
+
+```shell
+git branch
+```
+
+The checked out branch will have a `*` before the name. If the return designates anything other then `master` then switch to master
+
+```shell
+git checkout master
+```
+
+Once on master and ready to pull updates, we use the following:
+```shell
+git pull origin master
+```
+Depending on our setup, we may even be able to run only the following:
+```shell
+git pull
+```
+
+The `git pull` command combines two other commands, `git fetch` and `git merge`. When doing a `fetch` the resulting commits are stored as a remote branch allowing we to review the changes before merging. *Merging*, on the other hand, can involve additional steps and flags in the command, but more on that later. For now, We will stick with `git pull`.
+
+Now that We are all up to date with the remote repo, We will create a branch. For efficiency, we use the following:
+```shell
+git checkout -b our-new-feature-branch
+```
+
+This command will create a new branch from `master` as well as check out out that new branch at the same time. Doing a `git branch` here again will list out the branches in our local repo and place a `*` before the branch that is checked out.  
+
+```shell
+master
+ou-new-feature-branch
+```
+
+
+
+## Branch management
+
+When We are working on our new feature branch, it is a good idea to commit often. This allows me to move forward without fear that if something goes wrong, or we have to back out for some reason, we don't lose too much work. Think of committing like that save button habit we have so well programed into we. 
+
+Each commit also tells a little bit about what we just worked on. That's important when other devs on the team are reviewing our code. It's better to have more commits with messages that explain the step versus one large commit that glosses over important details. 
+
+
+## Push our branch
+
+When working with feature branches on a team, it is typically not appropriate to merge our own code into master. Although this is up to our team as to best manage, the norm is usually to make pull requests. Pull requests require that we push our branch to the remote repo.
+
+To push the new feature branch to the remote repo, simply do the following: 
+```shell
+git push origin our-new-feature-branch
+```
+As far as Git is concerned, there is no real difference between `master` and a feature branch. So, all the identical Git features apply. 
+
+## Working on remote feature branches
+
+When we are creating the feature branch, this is all pretty simple. But when We need to work on a co-workers branch, there are a few additional steps that we have to follow. 
+
+### Tracking remote branches
+
+Our local `.git/` directory will, of course, manage all our local branches, but our local repo is not always aware of any remote branches. To see what knowledge our local branch has of the remote branch index, adding the `-r` flag to `git branch` will return a list.
+
+```shell
+git branch -r
+```
+To keep our local repo 100% in sync with deleted remote branches:
+
+```shell
+git fetch 
+```
+
+### Switching to a new remote feature branch
+
+Doing a `git pull` or `git fetch` will update our local repo's index of remote branches. As long as co-workers have pushed their branch, our local repo will have knowledge of that feature branch. 
+
+By doing a `git branch` we will see a list of our local branches. By doing a `git branch -r` we will see a list of remote branches. 
+
+The process of making a remote branch a local branch to work on is easy, simply check out the branch.
+
+```shell
+git checkout new-remote-feature-branch
+```
+
+This command will pull its knowledge of the remote branch and create a local instance to work on. 
+
+## Keeping current with the master branch
+
+Depending on how long we have been working with our feature branch and how large our dev team is, the `master` branch of our project may be really out of sync from where we created our feature branch. 
+
+When we have completed our update and prior to creating a pull request, we not only have to be up to date in order to merge our new code but also be confident that our code will still work with the latest version of `master`. 
+
+It's here where there are two very different schools of thought. Some teams don't mind if we PULL the latest version from `master`, by simply doing the following. 
+```shell
+git pull origin master
+```
+This will fetch and merge any changes on the remote repo into the local branch with all the changes, now allowing our feature branch able to be merged. This works for the purpose of merging, but it's kind of gross on the branch's history graph.
+
+Then there are teams who are not a fan of this process, simply because pulling from origin can really screw up the feature branch's history and make it harder to perform more advanced Git features if needed. So, in these situations, it's best to REBASE O_O.
+
+Rebasing a feature branch is not as scary as most make it seem.  All a rebase really is, is taking the updates of the feature branch and moving them to a new spot in the history as to be on top of the latest version of `master`. It's as if we just created that feature branch and made the updates. This creates a very consistent branch history that is easy to follow and easy to work within all situations. 
+
+To rebase our local feature branch off of the latest version of `master`, following these steps will be a guarantee every time. 
+
+```shell
+git checkout master /* make sure we are on the master branch
+git pull   /* pull the latest from the remote 
+git checkout our-feature-branch  /* checkout the feature branch
+git push origin our-feature-branch  /* update our copy in the repo
+git rebase master  /* rebase on the master branch
+git push origin our-feature-branch --force   /* force update the remote
+```
+
+And that's it. This process will ensure that we have the latest version of `master` then take the commits from our feature branch, temporarily unset them, move to the newest head of the `master` branch and then re-commit them. As long as there are no conflicts, there should be no issues. 
+
+## The Pull Request
+`
+Pull requests let we tell others about changes we've pushed to a GitHub repository. Once a pull request is sent, interested parties can review the set of changes, discuss potential modifications, and even push follow-up commits if necessary.
+`
+As stated previously, one of the key points of the feature branch workflow is that the developer who wrote the code does not merge the code with `master` until there has been through a peer review. Leveraging Github's pull request features, once we have completed the feature branch and pushed it to the repo, there will be an option to review the diff and create a pull request. 
+
+In essence, a pull request is a notification of the new code in an experience that allows a peer developer to review the individual updates within the context of the update. For example, if the update was on line 18 of `index.js`, then we will only see `index.js` and a few lines before and after line 18. 
+
+This experience also allows the peer reviewer to place a comment on any line within the update that will be communicated back to the editor of origin. This review experience really allows everyone on the team to be actively involved in each update.
+
+
+**A picture of gitflow is worth a thousand words**
+![GitFlow](data/gitflow.png)
