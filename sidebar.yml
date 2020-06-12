@@ -1,0 +1,28 @@
+# Sidebar navigation
+
+- label: 'Introduction'
+  link: '/'
+# - label: 'Getting started'
+#   link: '/getting-started'
+- label: Github
+  items:
+    - label: 'Getting started with your Github Profil'
+      link: '/github/first-steps'
+    - label: 'Getting started with SSH'
+      link: '/github/github-ssh'
+    - label: 'Getting started with Personal Access Token'
+      link: '/github/pat'
+
+- label: Git
+  items:
+    - label: 'What is Git ?'
+      link: '/git/what-is-git'
+    - label: 'Getting Started with Git'
+      link: '/git/tutorial'    
+    - label: 'Branching'
+      link: '/git/git-workflow'
+      
+- label: Others
+  items:
+    - label: 'Noteworthy Resources'
+      link: '/others/resources'
